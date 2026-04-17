@@ -9,8 +9,8 @@ Descreva brevemente o objetivo do projeto e o problema que ele resolve.
 
 ## Equipe
 
-- Nome 1
-- Nome 2
+- Bruno de Melo Costa
+- Wellington Viana da Silva Junior
 
 ## Técnicas de RAG Utilizadas
 
