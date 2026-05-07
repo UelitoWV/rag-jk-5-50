@@ -3,54 +3,59 @@
 
 ## Descrição
 
-Descreva brevemente o objetivo do projeto e o problema que ele resolve.
+Este projeto implementa um sistema de **Retrieval-Augmented Generation (RAG)** especializado na biografia de Juscelino Kubitschek, utilizando técnicas avançadas de recuperação híbrida e re-ranking para responder a perguntas complexas de múltipla escolha com alta precisão.
 
 > Projeto desenvolvido para a disciplina de **Sistemas Multiagentes**, semestre 2026.1, BCC, UFRPE.
 
-## Equipe
+## Equipe   
 
 - Bruno de Melo Costa
 - Wellington Viana da Silva Junior
 
 ## Técnicas de RAG Utilizadas
 
-Liste e descreva as técnicas de RAG (Retrieval-Augmented Generation) adotadas pela equipe, por exemplo:
+O sistema utiliza uma pipeline sofisticada para garantir a relevância e diversidade dos contextos recuperados:
 
-- **Chunking Strategy**: descreva como os documentos são divididos (tamanho do chunk, sobreposição, etc.).
-- **Embedding Model**: modelo utilizado para gerar os embeddings (ex.: `text-embedding-ada-002`, `sentence-transformers/all-MiniLM-L6-v2`).
-- **Vector Store**: banco de vetores utilizado (ex.: FAISS, Chroma, Pinecone).
-- **Retrieval Strategy**: estratégia de recuperação (ex.: similaridade de cosseno, BM25 híbrido, MMR).
-- **Reranking**: se aplicável, descreva o método de reranking utilizado.
-- **Outras técnicas**: ex.: HyDE, query expansion, self-query retriever, etc.
-
+- **Chunking Strategy**: Utiliza o `SemanticChunker` da LangChain, que divide o documento baseado na variação semântica entre sentenças (threshold de percentil 70), garantindo que cada fragmento mantenha uma unidade de significado coesa.
+- **Embedding Model**: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, um modelo multilíngue eficiente para representação vetorial de sentenças.
+- **Vector Store**: **ChromaDB**, utilizado para persistência local dos embeddings e busca vetorial.
+- **Retrieval Strategy**: **Busca Híbrida (Ensemble)** combinando:
+    - **BM25**: Recuperação baseada em palavras-chave, ideal para nomes próprios e termos específicos.
+    - **MMR (Maximal Marginal Relevance)**: Busca semântica que penaliza a redundância, selecionando resultados relevantes e diversos.
+- **Reranking**: Implementado via `CrossEncoder` com o modelo `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1`. O re-ranking refina os resultados do ensemble inicial, reordenando os chunks de acordo com a relevância direta à pergunta.
+- **Prompt Engineering**: Prompt estruturado para análise rigorosa de alternativas de múltipla escolha, forçando o modelo a justificar a veracidade de cada opção baseando-se estritamente no contexto.
 
 ## Estrutura do Projeto
 
 ```
 ├── README.md
-├── src/                # Código-fonte principal
-├── kb/
-│   └── raw/            # Documento bruto usado da base de conhecimento
-├── notebooks/          # Notebooks de experimentos e análises
 ├── requirements.txt    # Dependências do projeto
-└── .github/
-    └── pull_request_template.md
+├── chroma_db/          # Base de vetores persistida
+├── kb/
+│   └── raw/            # Documento PDF (biografia de JK)
+├── notebooks/          # Experimentos utilizados como teste para a aplicação do RAG final
+└── src/                # Código-fonte principal
+    ├── base_rag.py     # Interface abstrata para o sistema RAG
+    ├── rag.py          # Implementação da classe MyRAG e pipeline principal
+    └── utils/
+        └── create_kb.py # Scripts para processamento de PDF e criação da base
 ```
-
 
 ## Instalação
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/<seu-usuario>/<seu-repositorio>.git
-   cd <seu-repositorio>
+   git clone https://github.com/UFRPE-SMA-2026-1/projeto-1-rag-rag-5-anos-em-50.git
+   cd projeto-1-rag-rag-5-anos-em-50
    ```
 
 2. Crie e ative um ambiente virtual:
    ```bash
    python -m venv .venv
-   source .venv/bin/activate   # Linux/macOS
-   .venv\Scripts\activate      # Windows
+   # Linux/macOS
+   source .venv/bin/activate   
+   # Windows
+   .venv\Scripts\activate      
    ```
 
 3. Instale as dependências:
@@ -58,13 +63,23 @@ Liste e descreva as técnicas de RAG (Retrieval-Augmented Generation) adotadas p
    pip install -r requirements.txt
    ```
 
-4. Configure as variáveis de ambiente ...
-
+4. (Opcional) Configure seu ambiente para uso de GPU (CUDA) se disponível, o código detectará automaticamente via `torch.cuda.is_available()`.
 
 ## Como Executar
 
-...
+O ponto de entrada principal é o arquivo `src/rag.py`. Ele contém um exemplo de execução utilizando o modelo `google/gemma-2b-it`.
 
+Para rodar o sistema:
+
+```bash
+cd src
+python rag.py
+```
+
+O script irá:
+1. Inicializar a base de conhecimento (carregando do PDF ou do disco se já existir).
+2. Carregar o modelo de linguagem via HuggingFace.
+3. Processar uma pergunta de exemplo e exibir a resposta estruturada com justificativas.
 
 ## Licença
 
