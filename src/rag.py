@@ -20,18 +20,6 @@ if(torch.cuda.is_available()):
 else:
     device = "cpu"
 
-##################################################################
-##  EXEMPLO DE COMO IMPLEMENTAR UM RAG HERDANDO DA CLASSE BASE  ##
-##################################################################
-'''
-Atenção, a classe abaixo faria só o fluxo padrão de RAG, sem o processo
-inicial de indexação (dividir em chunks, criar vector deb, etc).
-
-O processo inicial de indexação deve ser feito à parte (em um scrip separado),
-uma única vez, salvando o vector db em arquivo, que deve ser uploaded para o
-seu repositório.
-'''
-
 class MyRAG(BaseRAG):
     def __init__(self, llm_instance, param1=None, param2=None, **kwargs):
         self.embeddings_model = HuggingFaceEmbeddings(
@@ -65,6 +53,7 @@ Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
         )
         super().__init__(llm_instance, **kwargs)
 
+    # Retriever com MMR e EnsembleRetriever
     def _build_retriever(self, quantity: int = 5):
         semantic = self.vector_store.as_retriever(
             search_type="mmr",
@@ -78,6 +67,7 @@ Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
 
         cross_encoder = self.cross_encoder
 
+        # Cross-encoder -> Principal peça para o re-ranking
         class CrossEncoderRetriever(BaseRetriever):
             vectorstore: Any
             cross_encoder: Any
@@ -102,7 +92,9 @@ Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
             k=quantity * 2,
             rerank_top_k=3
         )
+    
 
+    # Função específica pra rodar o RAG workflow
     def answer_question(self, question: str, mostrar_chunks: bool = False) -> str:
         retriever = self._build_retriever()
         docs = retriever.invoke(question)
@@ -117,8 +109,14 @@ Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
         final_prompt = self.prompt.format(contexto=contexto, pergunta=question)
 
         response = self._generate_response(system_prompt='', user_prompt=final_prompt)
-        return response, [d.page_content for d in docs]
 
+        # Caso seja interessante mostrar os chunks
+        if mostrar_chunks:
+            return response, [d.page_content for d in docs]
+        
+        return response
+
+    # Limpar a rodagem do RAG
     def teardown(self) -> None:
         self.vector_store._client.close()
 
