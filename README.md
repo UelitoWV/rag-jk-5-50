@@ -7,6 +7,8 @@ Este projeto implementa um sistema de **Retrieval-Augmented Generation (RAG)** e
 
 > Projeto desenvolvido para a disciplina de **Sistemas Multiagentes**, semestre 2026.1, BCC, UFRPE.
 
+> Link do RAG via Colab: https://colab.research.google.com/drive/1YFrZ0bWEVApZeiTOSxwGsaH0kLYRA7_d?usp=sharing
+
 ## Equipe   
 
 - Bruno de Melo Costa
@@ -29,16 +31,17 @@ O sistema utiliza uma pipeline sofisticada para garantir a relevância e diversi
 
 ```
 ├── README.md
-├── requirements.txt    # Dependências do projeto
-├── chroma_db/          # Base de vetores persistida
+├── requirements.txt                   # Dependências do projeto
+├── chroma_db/                         # Base de vetores persistida
 ├── kb/
-│   └── raw/            # Documento PDF (biografia de JK)
-├── notebooks/          # Experimentos utilizados como teste para a aplicação do RAG final
-└── src/                # Código-fonte principal
-    ├── base_rag.py     # Interface abstrata para o sistema RAG
-    ├── rag.py          # Implementação da classe MyRAG e pipeline principal
+│   └── raw/                           # Documento PDF (biografia de JK)
+├── notebooks/                         # Experimentos utilizados como teste para a aplicação do RAG final
+└── src/                               # Código-fonte principal
+    ├── base_rag.py                    # Interface abstrata para o sistema RAG
+    ├── rag.py                         # Implementação da classe MyRAG e pipeline principal
+    ├── RAG_5_anos_em_50.py            # Notebook implementado via Colab
     └── utils/
-        └── create_kb.py # Scripts para processamento de PDF e criação da base
+        └── create_kb.py               # Scripts para processamento de PDF e criação da base
 ```
 
 ## Instalação
