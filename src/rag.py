@@ -90,7 +90,10 @@ class MyRAG(BaseRAG):
                 print(f" => chunk {i+1}: {doc.page_content[:80]}...")
             print("----")
 
-        contexto = "\n---\n".join(d.page_content for d in docs)
+        contexto = "\n".join(
+            f"[Trecho {i+1}]: {doc.page_content}" 
+            for i, doc in enumerate(docs)
+        )
         final_prompt = self.prompt.format(contexto=contexto, pergunta=question)
 
         response = self._generate_response(system_prompt='', user_prompt=final_prompt)
