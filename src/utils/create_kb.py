@@ -40,7 +40,7 @@ def initialize_kb(embeddings_model):
         text_splitter = SemanticChunker(
             embeddings=embeddings_model,
             breakpoint_threshold_type="percentile",
-            breakpoint_threshold_amount=70
+            breakpoint_threshold_amount=85
         )
 
         chunks = text_splitter.split_documents(all_pages)

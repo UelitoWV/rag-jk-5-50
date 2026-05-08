@@ -20,6 +20,9 @@ if(torch.cuda.is_available()):
 else:
     device = "cpu"
 
+with open('./src/utils/prompt.txt', 'r') as file:
+    content = file.read()
+
 class MyRAG(BaseRAG):
     def __init__(self, llm_instance, param1=None, param2=None, **kwargs):
         self.embeddings_model = HuggingFaceEmbeddings(
@@ -31,25 +34,7 @@ class MyRAG(BaseRAG):
         self.cross_encoder = CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1')
         self.prompt = PromptTemplate(
             input_variables=["contexto", "pergunta"],
-            template="""
-Você é um especialista em análise de documentos. Sua tarefa é responder à pergunta do usuário usando APENAS as informações contidas nos <trechos_fornecidos>.
-
-Regras:
-1. Analise cada uma das alternativas (A, B, C, D, etc.) individualmente.
-2. Diga se ela é FALSA ou VERDADEIRA de acordo com os trechos e dê uma justificativa de uma linha.
-3. Se o texto não cobrir 100% de uma alternativa, mas comprovar a sua ideia central e invalidar as outras, marque-a como a mais correta.
-4. Nunca use conhecimentos externos.
-
-<trechos_fornecidos>
-{contexto}
-</trechos_fornecidos>
-
-Pergunta e Alternativas: 
-{pergunta}
-
-Formato de Resposta Obrigatório:
-Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
-"""
+            template=content
         )
         super().__init__(llm_instance, **kwargs)
 
@@ -57,7 +42,7 @@ Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
     def _build_retriever(self, quantity: int = 5):
         semantic = self.vector_store.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": quantity, "fetch_k": 20, "lambda_mult": 0.6}
+            search_kwargs={"k": quantity, "fetch_k": 30, "lambda_mult": 0.6}
         )
 
         ensemble = EnsembleRetriever(
@@ -133,7 +118,7 @@ Alternativa Correta: [Letra da alternativa correta] - Justificativa da escolha
 
 if __name__ == "__main__":
 
-    MODEL_ID = "google/gemma-2b-it"
+    MODEL_ID = "google/gemma-3-4b-it"
 
     local_llm = HuggingFacePipeline.from_model_id(
         model_id=MODEL_ID,
