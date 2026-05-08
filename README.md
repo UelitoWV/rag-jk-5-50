@@ -25,7 +25,7 @@ O sistema utiliza uma pipeline sofisticada para garantir a relevância e diversi
     - **BM25**: Recuperação baseada em palavras-chave, ideal para nomes próprios e termos específicos.
     - **MMR (Maximal Marginal Relevance)**: Busca semântica que penaliza a redundância, selecionando resultados relevantes e diversos.
 - **Reranking**: Implementado via `CrossEncoder` com o modelo `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1`. O re-ranking refina os resultados do ensemble inicial, reordenando os chunks de acordo com a relevância direta à pergunta.
-- **Prompt Engineering**: Prompt estruturado para análise rigorosa de alternativas de múltipla escolha, forçando o modelo a justificar a veracidade de cada opção baseando-se estritamente no contexto.
+- **Prompt Engineering**: Prompt estruturado para análise rigorosa de alternativas de múltipla escolha e alguns exemplos genéricos para ajudar a construção da mesma (3 exemplos), forçando o modelo a justificar a veracidade de cada opção baseando-se estritamente no contexto.
 
 ## Estrutura do Projeto
 
