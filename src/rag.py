@@ -12,6 +12,7 @@ from typing import Any, List
 from base_rag import BaseRAG
 from utils.create_kb import initialize_kb
 import torch
+from pathlib import Path
 
 device = ''
 
@@ -20,7 +21,10 @@ if(torch.cuda.is_available()):
 else:
     device = "cpu"
 
-with open('./src/utils/prompt.txt', 'r') as file:
+BASE_DIR = Path(__file__).resolve().parent
+PROMPT_PATH = BASE_DIR / "utils" / "prompt.txt"
+
+with open(PROMPT_PATH, 'r') as file:
     content = file.read()
 
 class MyRAG(BaseRAG):
