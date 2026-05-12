@@ -45,6 +45,12 @@ def initialize_kb(embeddings_model):
 
         chunks = text_splitter.split_documents(all_pages)
         print(f"Documento dividido em {len(chunks)} partes.")
+
+        for i, chunk in enumerate(chunks):
+            chunk.metadata['chunk_id'] = i
+            page = chunk.metadata.get('page', None)
+            chunk.metadata['page_display'] = f"p. {int(page) + 1}" if page is not None else "p. ?"
+        
         vector_store.add_documents(documents=chunks)
     else:
         # Execuções seguintes: recupera do disco para o BM25
@@ -57,6 +63,3 @@ def initialize_kb(embeddings_model):
         print(f"{len(chunks)} chunks recuperados do disco.")
 
     return vector_store, chunks
-
-if __name__ == "__main__":
-    vector_store = initialize_kb()

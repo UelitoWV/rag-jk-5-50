@@ -36,6 +36,7 @@ class MyRAG(BaseRAG):
             input_variables=["contexto", "pergunta"],
             template=content
         )
+        self.retriever = self._build_retriever()
         super().__init__(llm_instance, **kwargs)
 
     # Retriever com MMR e EnsembleRetriever
@@ -81,18 +82,18 @@ class MyRAG(BaseRAG):
 
     # Função específica pra rodar o RAG workflow
     def answer_question(self, question: str, mostrar_chunks: bool = False) -> str:
-        retriever = self._build_retriever()
-        docs = retriever.invoke(question)
+        docs = self.retriever.invoke(question)
 
         if mostrar_chunks:
             print("----")
             for i, doc in enumerate(docs):
-                print(f" => chunk {i+1}: {doc.page_content[:80]}...")
+                page = doc.metadata.get('page_display', 'p. ?')
+                print(f" => chunk {i+1} [{page}]: {doc.page_content[:80]}...")
             print("----")
 
-        contexto = "\n".join(
-            f"[Trecho {i+1}]: {doc.page_content}" 
-            for i, doc in enumerate(docs)
+        contexto = "\n---\n".join(
+        f"[{doc.metadata.get('page_display', 'p. ?')}] {doc.page_content}"
+        for doc in docs
         )
         final_prompt = self.prompt.format(contexto=contexto, pergunta=question)
 
@@ -100,18 +101,24 @@ class MyRAG(BaseRAG):
 
         # Caso seja interessante mostrar os chunks
         if mostrar_chunks:
-            return response, [d.page_content for d in docs]
+            chunks_texto = "\n\n".join(
+            f"[{doc.metadata.get('page_display', 'p. ?')}] {doc.page_content}" for doc in docs)
+            return response, chunks_texto
         
         return response
 
     # Limpar a rodagem do RAG
     def teardown(self) -> None:
         self.vector_store._client.close()
-
+        
+        del self.embeddings_model
         del self.vector_store
         del self.chunks
         del self.bm25
         del self.cross_encoder
+        del self.prompt
+        del self.retriever
+        del self.llm_instance
 
         print("Recursos de hardware liberados.")
 
@@ -121,7 +128,7 @@ class MyRAG(BaseRAG):
 
 if __name__ == "__main__":
 
-    MODEL_ID = "google/gemma-3-4b-it"
+    MODEL_ID = "google/gemma-2-2b-it"
 
     local_llm = HuggingFacePipeline.from_model_id(
         model_id=MODEL_ID,
@@ -148,3 +155,4 @@ if __name__ == "__main__":
     print(resposta)
     print("---------")
     print(chunks)
+    rag.teardown()
