@@ -3,7 +3,7 @@
 
 ## Descrição
 
-Este projeto implementa um sistema de **Retrieval-Augmented Generation (RAG)** especializado na biografia de Juscelino Kubitschek, utilizando técnicas avançadas de recuperação híbrida e re-ranking para responder a perguntas complexas de múltipla escolha com alta precisão.
+Este projeto implementa um sistema de **Retrieval-Augmented Generation (RAG)** especializado na biografia de Juscelino Kubitschek, utilizando técnicas avançadas de recuperação híbrida e re-ranking para responder a perguntas de múltipla escolha com alta precisão.
 
 > Projeto desenvolvido para a disciplina de **Sistemas Multiagentes**, semestre 2026.1, BCC, UFRPE.
 
@@ -18,7 +18,7 @@ Este projeto implementa um sistema de **Retrieval-Augmented Generation (RAG)** e
 
 O sistema utiliza uma pipeline sofisticada para garantir a relevância e diversidade dos contextos recuperados:
 
-- **Chunking Strategy**: Utiliza o `SemanticChunker` da LangChain, que divide o documento baseado na variação semântica entre sentenças (threshold de percentil 70), garantindo que cada fragmento mantenha uma unidade de significado coesa.
+- **Chunking Strategy**: Utiliza o `SemanticChunker` da LangChain, que divide o documento baseado na variação semântica entre sentenças (threshold de percentil 85), garantindo que cada fragmento mantenha uma unidade de significado coesa.
 - **Embedding Model**: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, um modelo multilíngue eficiente para representação vetorial de sentenças.
 - **Vector Store**: **ChromaDB**, utilizado para persistência local dos embeddings e busca vetorial.
 - **Retrieval Strategy**: **Busca Híbrida (Ensemble)** combinando:
@@ -67,6 +67,8 @@ O sistema utiliza uma pipeline sofisticada para garantir a relevância e diversi
    ```
 
 4. (Opcional) Configure seu ambiente para uso de GPU (CUDA) se disponível, o código detectará automaticamente via `torch.cuda.is_available()`.
+   
+5. Para rodar os notebooks de treino (pasta `notebooks/`), o mais ideal seria copiar e colocar no colab para rodar, porque ele foi gerado por lá.
 
 ## Como Executar
 
