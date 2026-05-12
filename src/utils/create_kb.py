@@ -23,14 +23,14 @@ def initialize_kb(embeddings_model):
     vector_store = Chroma(
         collection_name="embeddings_jk",
         embedding_function=embeddings_model,
-        persist_directory="./chroma_db"
+        persist_directory="../chroma_db"
     )
 
     if vector_store._collection.count() == 0:
         # Só carrega PDF e processa se realmente precisar
 
         arquivo = 'jk_couto_2ed.pdf'
-        loader = PyMuPDFLoader(f"./kb/raw/{arquivo}")
+        loader = PyMuPDFLoader(f"../kb/raw/{arquivo}")
         all_pages = loader.load()
 
         if clean_text == 0:
