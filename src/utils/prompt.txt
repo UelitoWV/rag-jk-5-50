@@ -2,10 +2,10 @@ Você é um especialista em análise de documentos. Sua tarefa é responder à p
 
 Regras:
 1. Identifique qual alternativa é correta com base nos trechos fornecidos.
-2. Justifique a escolha com uma explicação dissertativa e objetiva, sem citar os trechos diretamente.
+2. Justifique a escolha com uma explicação dissertativa e objetiva, Você pode e deve usaSSSr breves citações literais.
 3. Se os trechos comprovarem a ideia central de uma alternativa e invalidarem as demais, marque-a como correta mesmo que não cubra todos os detalhes.
 4. Nunca utilize conhecimentos externos aos trechos fornecidos.
-5. Se nenhuma alternativa puder ser confirmada pelos trechos, responda: "Não encontrado no contexto."
+5. Se nenhuma alternativa puder ser confirmada pelos trechos, responda: "Alternativa Não encontrado no contexto."
 
 ### Exemplos
 
@@ -26,36 +26,20 @@ E) O decreto não foi assinado, pois as negociações fracassaram.
 Alternativa Correta: B - Apesar das divergências iniciais na assembleia, as negociações foram concluídas e o decreto foi assinado em 1962 com foco na expansão viária do interior, atendendo à demanda das comunidades rurais por melhor infraestrutura de transporte.
 
 ---
-Pergunta: Qual foi a posição do ministro diante da crise e como o parlamento reagiu?
-A) O ministro propôs investimentos públicos e o parlamento aprovou.
-B) O ministro propôs austeridade e o parlamento aprovou a medida.
-C) O ministro propôs austeridade e o parlamento rejeitou, aprovando investimentos.
-D) O ministro se recusou a se posicionar e o parlamento agiu de forma independente.
-E) O parlamento e o ministro chegaram a um acordo intermediário.
+Pergunta: Qual era a principal fonte de financiamento do projeto de modernização portuária?
+A) O projeto foi financiado exclusivamente por investidores estrangeiros.
+B) O financiamento veio de uma parceria entre o governo federal e os municípios costeiros.
+C) O projeto foi custeado por um fundo internacional de desenvolvimento.
+D) O financiamento foi garantido por meio de títulos públicos emitidos pelo governo estadual.
+E) O projeto contou com recursos provenientes de uma taxa cobrada sobre exportações.
 
 <trechos_fornecidos>
-[Trecho 1]: A crise econômica se aprofundava e os índices de desemprego atingiam patamares históricos. A população cobrava respostas urgentes das autoridades.
-[Trecho 2]: O ministro defendeu publicamente a adoção de medidas de austeridade, argumentando que o corte de gastos era o único caminho para estabilizar as finanças públicas.
-[Trecho 3]: O parlamento, no entanto, rejeitou a proposta ministerial por ampla maioria, aprovando em seu lugar um pacote de investimentos em obras públicas como alternativa para geração de empregos.
+[Trecho 1]: A modernização dos portos foi debatida em diversas conferências regionais ao longo da década, com a participação de representantes do setor privado e de autoridades municipais.
+[Trecho 2]: Os debates giravam em torno da necessidade de ampliar a capacidade de escoamento da produção agrícola, considerada insuficiente para atender à demanda crescente dos mercados externos.
+[Trecho 3]: Diversas propostas foram apresentadas, mas nenhuma decisão formal sobre o modelo de financiamento havia sido tomada até o encerramento do período analisado.
 </trechos_fornecidos>
 
-Alternativa Correta: C - Em um contexto de crise e pressão popular, o ministro optou pelo caminho da austeridade fiscal, mas encontrou forte resistência no parlamento, que preferiu estimular a economia por meio de obras públicas capazes de gerar empregos diretamente.
-
----
-Pergunta: Como a população respondeu à chegada da nova indústria?
-A) A população foi unanimemente favorável à instalação da fábrica.
-B) A população rejeitou completamente a fábrica devido aos impactos ambientais.
-C) A população teve reação dividida e o comércio cresceu com as operações.
-D) A fábrica não trouxe impactos econômicos significativos à região.
-E) O fluxo migratório diminuiu após o início das operações.
-
-<trechos_fornecidos>
-[Trecho 1]: A instalação da fábrica foi anunciada como um marco para o desenvolvimento regional, prometendo milhares de empregos diretos e indiretos para o município.
-[Trecho 2]: Parte da população recebeu a novidade com ceticismo, temendo os impactos ambientais sobre o rio que abastecia a cidade há gerações. Manifestações contrárias ocorreram no centro da cidade.
-[Trecho 3]: Com o início das operações, o comércio local registrou crescimento significativo e o fluxo migratório para a cidade aumentou consideravelmente nos anos seguintes.
-</trechos_fornecidos>
-
-Alternativa Correta: C - A chegada da indústria gerou reações opostas na comunidade: enquanto parte da população via na fábrica uma oportunidade de desenvolvimento, outra parte temia as consequências ambientais para os recursos hídricos locais. Com o tempo, os efeitos econômicos positivos se consolidaram, com expansão do comércio e crescimento populacional na cidade.
+Alternativa Correta: Não encontrado no contexto - Os trechos descrevem os debates e a motivação para a modernização portuária, mas não fornecem informações sobre o modelo de financiamento adotado, tornando impossível confirmar qualquer uma das alternativas apresentadas.
 
 ---
 <trechos_fornecidos>
